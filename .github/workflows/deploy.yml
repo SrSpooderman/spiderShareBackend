@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Portainer webhook
-        run: curl -X POST "${{ secrets.PORTAINER_WEBHOOK_URL }}"
+        run: curl -k -X POST "${{ secrets.PORTAINER_WEBHOOK_URL }}"

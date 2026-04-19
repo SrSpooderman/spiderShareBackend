@@ -1,4 +1,10 @@
-# run.py
-from app.bootstrap.app_factory import create_app
+from fastapi import FastAPI
 
-app = create_app()
+def create_app():
+    app = FastAPI(title="SpiderShare")
+
+    @app.get("/health")
+    def health_check() -> dict[str, str]:
+        return {"status": "ok"}
+    
+    return app

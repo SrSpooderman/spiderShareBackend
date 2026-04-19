@@ -11,11 +11,15 @@ services:
     ports:
       - "${APP_PORT:-8000}:8000"
     volumes:
+      - ./:/app
       - ./storage/videos:${VIDEO_STORAGE_PATH:-/app/storage/videos}
     depends_on:
       mysql:
         condition: service_healthy
-    command: uvicorn run:app --host 0.0.0.0 --port 8000 --reload
+    command: >
+      sh -c "alembic -c /app/alembic.ini upgrade head &&
+      uvicorn run:app --host 0.0.0.0 --port 8000 --reload"
+
 
   mysql:
     image: mysql:8.4

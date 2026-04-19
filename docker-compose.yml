@@ -4,7 +4,10 @@ services:
       context: .
     container_name: spidershare_api
     env_file:
-      - .env
+      - path: stack.env
+        required: false
+      - path: .env
+        required: false
     ports:
       - "${APP_PORT:-8000}:8000"
     volumes:
@@ -19,6 +22,11 @@ services:
     image: mysql:8.4
     container_name: spidershare_mysql
     restart: unless-stopped
+    env_file:
+      - path: stack.env
+        required: false
+      - path: .env
+        required: false
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE:-spidershare}
       MYSQL_USER: ${MYSQL_USER:-spidershare}

@@ -6,5 +6,5 @@ alembic
 pymysql
 cryptography
 python-jose[cryptography]
-passlib[bcrypt]
+bcrypt
 python-multipart

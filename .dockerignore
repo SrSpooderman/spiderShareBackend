@@ -1,0 +1,79 @@
+# Git and local editor metadata
+.git
+.gitignore
+.github
+.dockerignore
+.codex
+.idea
+.vscode
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.cache/
+.pytest_cache/
+.mypy_cache/
+.pyre/
+.pytype/
+.ruff_cache/
+.hypothesis/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Build and package artifacts
+.Python
+build/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+share/python-wheels/
+*.egg-info/
+wheels/
+*.egg
+.installed.cfg
+MANIFEST
+
+# Test and coverage output
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.cover
+*.py,cover
+.tox/
+.nox/
+
+# Local environment files and secrets
+.env
+.env.*
+stack.env
+*.pem
+*.key
+*.crt
+!.env.example
+!.env.sample
+
+# Runtime data
+storage/videos/*
+!storage/videos/.gitkeep
+
+# Logs and temporary files
+*.log
+*.tmp
+tmp/
+temp/

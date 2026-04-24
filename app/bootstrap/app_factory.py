@@ -1,10 +1,15 @@
 from fastapi import FastAPI
 
-def create_app():
+from app.modules.auth.entrypoints.routes import router as auth_router
+
+
+def create_app() -> FastAPI:
     app = FastAPI(title="SpiderShare")
 
     @app.get("/health")
     def health_check() -> dict[str, str]:
         return {"status": "ok"}
-    
+
+    app.include_router(auth_router)
+
     return app

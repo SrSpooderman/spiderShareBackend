@@ -9,7 +9,7 @@ class User:
     display_name: str | None
     bio: str | None
     avatar_image: bytes | None
-    password_hash: str | None
+    password_hash: str
     ldap: bool
     is_active: bool
     last_seen_version: str | None
@@ -23,5 +23,5 @@ class UserCreate:
     display_name: str | None
     bio: str | None
     avatar_image: bytes | None
-    password_hash: str | None
+    password_hash: str
     ldap: bool

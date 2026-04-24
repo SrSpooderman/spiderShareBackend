@@ -69,8 +69,19 @@ db.sqlite3-journal
 # Environment variables and local config
 .env
 .env.*
+stack.env
 !.env.example
 !.env.sample
+*.pem
+*.key
+*.crt
+
+# Logs and temporary files
+*.log
+*.tmp
+tmp/
+temp/
+.cache/
 
 # IDE / OS files
 .idea/
@@ -80,5 +91,7 @@ db.sqlite3-journal
 .DS_Store
 Thumbs.db
 .codex
+
+# Runtime storage
 storage/videos/*
 !storage/videos/.gitkeep

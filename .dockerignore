@@ -2,6 +2,7 @@
 .git
 .gitignore
 .github
+.dockerignore
 .codex
 .idea
 .vscode
@@ -14,6 +15,7 @@ Thumbs.db
 __pycache__/
 *.py[cod]
 *$py.class
+.cache/
 .pytest_cache/
 .mypy_cache/
 .pyre/
@@ -28,14 +30,22 @@ env/
 ENV/
 
 # Build and package artifacts
+.Python
 build/
 dist/
 downloads/
 eggs/
 .eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+share/python-wheels/
 *.egg-info/
 wheels/
 *.egg
+.installed.cfg
 MANIFEST
 
 # Test and coverage output

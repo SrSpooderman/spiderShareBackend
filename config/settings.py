@@ -9,7 +9,9 @@ class Settings(BaseSettings):
     video_storage_path: str = "/app/storage/videos"
     secret_key: str
     jwt_algorithm: str = "HS256"
-    access_token_expire_minutes: int = 60
+    access_token_expire_minutes: int = 15
+    super_admin_username: str | None = None
+    super_admin_password: str | None = None
 
     model_config = SettingsConfigDict(
         env_file=".env",

@@ -64,12 +64,9 @@ def get_current_user(
     return user
 
 
-def require_role(*allowed_roles: UserRole):
-    if not allowed_roles:
-        raise ValueError("At least one role is required")
-
+def require_role_at_least(required_role: UserRole):
     def dependency(current_user: User = Depends(get_current_user)) -> User:
-        if not any(has_role_at_least(current_user.role, role) for role in allowed_roles):
+        if not has_role_at_least(current_user.role, required_role):
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail="Not enough permissions",
@@ -80,5 +77,5 @@ def require_role(*allowed_roles: UserRole):
     return dependency
 
 
-require_admin = require_role(UserRole.ADMIN)
-require_super_admin = require_role(UserRole.SUPER_ADMIN)
+require_admin = require_role_at_least(UserRole.ADMIN)
+require_super_admin = require_role_at_least(UserRole.SUPER_ADMIN)

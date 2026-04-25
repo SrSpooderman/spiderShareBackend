@@ -15,6 +15,7 @@ class JwtService:
         payload = {
             "sub": str(user.id),
             "username": user.username,
+            "role": user.role.value,
             "exp": expires_at,
         }
 

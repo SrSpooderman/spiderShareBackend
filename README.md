@@ -1,18 +1,5 @@
 # Siguiente Lista de Trabajo
 
-## Sistema de roles
-
-Objetivo: soportar roles `user`, `admin` y `super_admin` ahora, dejando margen para roles o permisos extra en el futuro.
-
-1. Gestionar el primer super admin.
-   Preparar una via controlada: migracion/seed, comando interno, script administrativo o actualizacion manual documentada.
-   Registrar cualquier cambio de rol desde endpoints admin cuando existan.
-
-2. Revisar JWT y seguridad.
-   Se puede incluir `role` en el token para comodidad del cliente, pero la autorizacion del backend debe confiar en el usuario cargado desde base de datos.
-   Asi, un cambio de rol o desactivacion se aplica aunque el token antiguo siga vivo.
-   Mantener expiracion corta del access token y evitar guardar permisos criticos solo en claims.
-
 ## Integracion Steam
 
 Referencias: <https://partner.steamgames.com/doc/api>, <https://partner.steamgames.com/doc/webapi_overview>, <https://partner.steamgames.com/doc/features/auth>

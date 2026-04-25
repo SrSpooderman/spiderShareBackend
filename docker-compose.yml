@@ -18,6 +18,7 @@ services:
         condition: service_healthy
     command: >
       sh -c "alembic -c /app/alembic.ini upgrade head &&
+      python -m app.bootstrap.seed_super_admin &&
       uvicorn run:app --host 0.0.0.0 --port 8000 --reload"
 
 

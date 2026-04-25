@@ -4,7 +4,7 @@ from uuid import UUID
 
 from app.modules.auth.application.password_hasher import PasswordHasher
 from app.modules.users.domain.ports import UserRepository
-from app.modules.users.domain.user import User, UserCreate
+from app.modules.users.domain.user import User, UserCreate, UserRole
 
 
 class UsernameAlreadyExistsError(Exception):
@@ -15,6 +15,7 @@ class UsernameAlreadyExistsError(Exception):
 class RegisterUserCommand:
     username: str
     password: str
+    role: UserRole = UserRole.USER
 
 
 @dataclass(frozen=True)
@@ -24,6 +25,7 @@ class PublicUser:
     display_name: str | None
     bio: str | None
     ldap: bool
+    role: UserRole
     is_active: bool
     last_seen_version: str | None
     last_login_at: datetime | None
@@ -53,6 +55,7 @@ class RegisterUser:
             avatar_image=None,
             password_hash=self.password_hasher.hash_password(command.password),
             ldap=False,
+            role=command.role,
         )
 
         created_user = self.user_repository.create(user)
@@ -67,6 +70,7 @@ def user_to_public(user: User) -> PublicUser:
         display_name=user.display_name,
         bio=user.bio,
         ldap=user.ldap,
+        role=user.role,
         is_active=user.is_active,
         last_seen_version=user.last_seen_version,
         last_login_at=user.last_login_at,

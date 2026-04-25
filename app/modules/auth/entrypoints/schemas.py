@@ -5,12 +5,13 @@ from pydantic import BaseModel
 
 from app.modules.auth.application.login import LoginResult
 from app.modules.auth.application.register import PublicUser
-from app.modules.users.domain.user import User
+from app.modules.users.domain.user import User, UserRole
 
 
 class RegisterRequest(BaseModel):
     username: str
     password: str
+    role: UserRole = UserRole.USER
 
 
 class LoginRequest(BaseModel):
@@ -24,6 +25,7 @@ class UserResponse(BaseModel):
     display_name: str | None
     bio: str | None
     ldap: bool
+    role: UserRole
     is_active: bool
     last_seen_version: str | None
     last_login_at: datetime | None
@@ -38,6 +40,7 @@ class UserResponse(BaseModel):
             display_name=user.display_name,
             bio=user.bio,
             ldap=user.ldap,
+            role=user.role,
             is_active=user.is_active,
             last_seen_version=user.last_seen_version,
             last_login_at=user.last_login_at,
@@ -53,6 +56,7 @@ class UserResponse(BaseModel):
             display_name=user.display_name,
             bio=user.bio,
             ldap=user.ldap,
+            role=user.role,
             is_active=user.is_active,
             last_seen_version=user.last_seen_version,
             last_login_at=user.last_login_at,

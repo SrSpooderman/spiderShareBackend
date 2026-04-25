@@ -21,6 +21,7 @@ class UserModel(Base):
     password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
 
     ldap: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default="0")
+    role: Mapped[str] = mapped_column(String(32), nullable=False, server_default="user")
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default="1")
 
     last_seen_version: Mapped[str | None] = mapped_column(String(32), nullable=True)

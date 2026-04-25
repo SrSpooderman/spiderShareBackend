@@ -4,37 +4,11 @@
 
 Objetivo: soportar roles `user`, `admin` y `super_admin` ahora, dejando margen para roles o permisos extra en el futuro.
 
-1. Definir el modelo inicial de rol.
-   Anadir un campo `role` en `users` con valor por defecto `user`.
-   Usar valores controlados desde dominio, por ejemplo `user`, `admin` y `super_admin`, evitando booleanos como `is_admin` o `is_super_admin`.
-   Mantener `is_active` separado del rol: un usuario puede ser admin y estar desactivado.
-
-2. Actualizar dominio, modelo y migracion.
-   Extender `User`, `UserCreate`, `UserModel` y los mappers para incluir `role`.
-   Crear una migracion Alembic nueva que anada la columna `role` a `users` con default `user` para usuarios existentes.
-   No modificar la migracion inicial ya creada; el historial debe crecer con una migracion nueva.
-
-3. Ajustar registro y respuestas publicas.
-   El registro publico debe crear siempre usuarios con `role=user`.
-   No aceptar `role` desde `RegisterRequest`, para que un cliente no pueda registrarse como admin.
-   Decidir si `UserResponse` debe exponer `role`; para `/auth/me` normalmente es util devolverlo.
-
-4. Centralizar autorizacion en dependencias de auth.
-   Mantener `get_current_user` como punto unico para autenticar y validar `is_active`.
-   Crear dependencias reutilizables tipo `require_role(...)`, `require_admin` o `require_super_admin`.
-   Las rutas protegidas deben usar esas dependencias en vez de repetir comparaciones de rol en cada endpoint.
-
-5. Definir jerarquia y permisos.
-   Regla inicial recomendada: `super_admin` puede hacer todo lo de `admin`, y `admin` puede hacer todo lo de `user`.
-   Si mas adelante aparecen permisos finos como `manage_users`, `manage_steam` o `view_reports`, evaluar migrar a tablas `roles`, `permissions` y `user_roles`.
-   No meter esa complejidad todavia si solo se necesita una jerarquia simple.
-
-6. Gestionar el primer super admin.
-   No permitir crear `super_admin` desde `/auth/register`.
+1. Gestionar el primer super admin.
    Preparar una via controlada: migracion/seed, comando interno, script administrativo o actualizacion manual documentada.
    Registrar cualquier cambio de rol desde endpoints admin cuando existan.
 
-7. Revisar JWT y seguridad.
+2. Revisar JWT y seguridad.
    Se puede incluir `role` en el token para comodidad del cliente, pero la autorizacion del backend debe confiar en el usuario cargado desde base de datos.
    Asi, un cambio de rol o desactivacion se aplica aunque el token antiguo siga vivo.
    Mantener expiracion corta del access token y evitar guardar permisos criticos solo en claims.

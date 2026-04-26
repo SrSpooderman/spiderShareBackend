@@ -9,7 +9,7 @@ from app.modules.auth.application.password_hasher import PasswordHasher
 from app.modules.auth.application.register import RegisterUser
 from app.modules.auth.infrastructure.jwt_service import JwtService
 from app.modules.users.domain.ports import UserRepository
-from app.modules.users.domain.user import User
+from app.modules.users.domain.user import User, UserRole, has_role_at_least
 from app.modules.users.wiring import get_user_repository
 
 
@@ -62,3 +62,20 @@ def get_current_user(
         raise credentials_error
 
     return user
+
+
+def require_role_at_least(required_role: UserRole):
+    def dependency(current_user: User = Depends(get_current_user)) -> User:
+        if not has_role_at_least(current_user.role, required_role):
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Not enough permissions",
+            )
+
+        return current_user
+
+    return dependency
+
+
+require_admin = require_role_at_least(UserRole.ADMIN)
+require_super_admin = require_role_at_least(UserRole.SUPER_ADMIN)

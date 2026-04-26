@@ -17,8 +17,13 @@ from app.modules.auth.entrypoints.schemas import (
     RegisterRequest,
     UserResponse,
 )
-from app.modules.auth.wiring import get_current_user, get_login_user, get_register_user
-from app.modules.users.domain.user import User
+from app.modules.auth.wiring import (
+    get_current_user,
+    get_login_user,
+    get_register_user,
+    require_admin,
+)
+from app.modules.users.domain.user import User, can_create_user_with_role
 
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -31,13 +36,21 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 )
 def register(
     request: RegisterRequest,
+    current_user: User = Depends(require_admin),
     register_user: RegisterUser = Depends(get_register_user),
 ) -> UserResponse:
+    if not can_create_user_with_role(current_user.role, request.role):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Not allowed to create a user with that role",
+        )
+
     try:
         user = register_user.execute(
             RegisterUserCommand(
                 username=request.username,
                 password=request.password,
+                role=request.role,
             )
         )
     except UsernameAlreadyExistsError:

@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from app.modules.users.domain.user import User, UserCreate
+from app.modules.users.domain.user import User, UserCreate, UserRole
 from app.modules.users.infrastructure.models import UserModel
 
 def user_model_to_domain(model: UserModel) -> User:
@@ -12,6 +12,7 @@ def user_model_to_domain(model: UserModel) -> User:
         avatar_image=model.avatar_image,
         password_hash=model.password_hash,
         ldap=model.ldap,
+        role=UserRole(model.role),
         is_active=model.is_active,
         last_seen_version=model.last_seen_version,
         last_login_at=model.last_login_at,
@@ -27,6 +28,6 @@ def user_create_to_model(user: UserCreate) -> UserModel:
         avatar_image=user.avatar_image,
         password_hash=user.password_hash,
         ldap=user.ldap,
+        role=user.role.value,
     )
-
 

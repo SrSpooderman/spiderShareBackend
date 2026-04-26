@@ -1,5 +1,9 @@
 # Siguiente Lista de Trabajo
 
+## Arrancar en desarrollo
+
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+
 ## Integracion Steam
 
 Referencias: <https://partner.steamgames.com/doc/api>, <https://partner.steamgames.com/doc/webapi_overview>, <https://partner.steamgames.com/doc/features/auth>

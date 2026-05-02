@@ -133,17 +133,25 @@ def get_public_steam_user_games(
             detail=str(error),
         )
 
+    valid_games = []
     for game in owned_games["games"]:
         name = game.get("name")
         appid = game.get("appid")
 
-        if appid is None or name is None:
+        if appid is None:
+            continue
+
+        valid_games.append(game)
+
+        if name is None:
             continue
 
         try:
             store_steam_game.execute(StoreSteamGameCommand(appid=appid, name=name))
         except InvalidSteamGameError:
             continue
+
+    owned_games = {**owned_games, "games": valid_games}
 
     return SteamOwnedGamesResponse.model_validate(owned_games)
 

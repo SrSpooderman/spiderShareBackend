@@ -39,7 +39,11 @@ def _detect_image_media_type(image: bytes) -> str:
 
 
 def _fields_set(request: UserUpdateRequest) -> set[str]:
-    return getattr(request, "model_fields_set", getattr(request, "__fields_set__", set()))
+    fields_set = getattr(request, "model_fields_set", None)
+    if fields_set is not None:
+        return fields_set
+
+    return getattr(request, "__fields_set__", set())
 
 
 def _get_target_user(user_id: UUID, user_repository: UserRepository) -> User:
